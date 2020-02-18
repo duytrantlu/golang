@@ -2,6 +2,8 @@ package main
 
 import (
 	"app/auth"
+	"app/controllers"
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"os"
@@ -10,6 +12,9 @@ import (
 func main()  {
 	// initial router with mux
 	router := mux.NewRouter()
+
+	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
+	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
 
 	// attach jwt auth
 	router.Use(auth.JwtAuthentication)
@@ -20,7 +25,7 @@ func main()  {
 	if port == "" {
 		port = "8080" // localhost
 	}
-
+	fmt.Println(port)
 	// listen server on port
 	err := http.ListenAndServe(":" + port, router)
 	if err != nil {
