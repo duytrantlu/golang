@@ -40,7 +40,7 @@ func(account *Account) Validate()(map[string]interface{}, bool)  {
 	// Check for errors and duplicate email
 	err := GetDB().Table("accounts").Where("email =?", account.Email).First(temp).Error
 
-	if err != nil || err != gorm.ErrRecordNotFound {
+	if err != nil && err != gorm.ErrRecordNotFound {
 		return u.Message(false, "Connected error. Please retry"), false
 	}
 

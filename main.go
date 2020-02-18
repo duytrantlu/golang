@@ -15,6 +15,9 @@ func main()  {
 
 	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
 	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
+	router.HandleFunc("/api/contacts/new", controllers.CreateContact).Methods("POST")
+	router.HandleFunc("/api/contacts", controllers.GetAllContact).Methods("GET")
+	router.HandleFunc("/api/contacts/{id}", controllers.GetContact).Methods("GET")
 
 	// attach jwt auth
 	router.Use(auth.JwtAuthentication)
